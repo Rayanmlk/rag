@@ -1,9 +1,9 @@
-# 🤖 RAG Portfolio — Système de Question-Réponse sur Papers IA/ML
+#  RAG Portfolio — Système de Question-Réponse sur Papers IA/ML
 
 > Système RAG (Retrieval-Augmented Generation) spécialisé sur des papers scientifiques IA/ML.
 > **Différenciateur clé** : comparaison rigoureuse de 3 modèles d'embeddings avec métriques RAGAS.
 
-![CI](https://github.com/TON_USERNAME/rag-portfolio/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Rayanmlk/rag-portfolio/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-0.4-orange)
@@ -133,5 +133,5 @@ pytest tests/ -v --cov=app --cov=rag --cov=evaluation
 ## 👤 Auteur
 
 **[Ton Prénom Nom]** — M1 Data & IA
-- GitHub: [@TON_USERNAME](https://github.com/TON_USERNAME)
+- GitHub: [@Rayanmlk](https://github.com/TON_USERNAME)
 - Demo: [API live](https://rag-portfolio.railway.app/docs)
