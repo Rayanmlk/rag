@@ -132,6 +132,6 @@ pytest tests/ -v --cov=app --cov=rag --cov=evaluation
 
 ## 👤 Auteur
 
-**[Rayan MALKI]** — M1 Data & IA
+**Rayan MALKI** — M1 Data & IA
 - GitHub: [@Rayanmlk](https://github.com/TON_USERNAME)
 - Demo: [API live](https://rag-portfolio.railway.app/docs)
