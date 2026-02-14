@@ -1,18 +1,8 @@
 # Comment tester le RAG et interpréter les résultats
 
-## 1. Mettre à jour GitHub
-
-À la racine du projet :
-
-```bash
-git add .
-git commit -m "Interface de test RAG (/ui), requirements assouplis, doc"
-git push origin main
-```
-
 ---
 
-## 2. Une question qui montre une grande réussite
+## 1. Une question qui montre une grande réussite
 
 La base contient des résumés de 5 papers : **Transformer**, **BERT**, **GPT-3**, **RAG**, **Sentence-BERT**.
 
