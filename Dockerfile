@@ -4,10 +4,9 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends gcc g++ && rm -rf /var/lib/apt/lists/*
 
-# Installe PyTorch CPU-only AVANT le reste (évite la version GPU qui pèse 6GB)
-RUN pip install --no-cache-dir torch==2.1.0 --index-url https://download.pytorch.org/whl/cpu
+# PyTorch CPU-only compatible avec transformers 4.38
+RUN pip install --no-cache-dir torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu
 
-# Reste des dépendances
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
