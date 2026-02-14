@@ -1,0 +1,91 @@
+name: RAG CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 🧪 Tests & Qualité
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov httpx
+
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          pytest tests/ -v --cov=app --cov=rag --cov=evaluation \
+            --cov-report=term-missing --cov-report=xml
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+        continue-on-error: true
+
+  evaluate:
+    name: 🔬 Évaluation RAG
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run RAG evaluation
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -c "
+          from evaluation.metrics import ModelComparator, RAGEvaluator
+          from rag.data import get_sample_documents, get_sample_qa_pairs
+
+          # Évalue un seul modèle en CI pour la rapidité
+          comparator = ModelComparator()
+          results, avg_score = comparator.evaluate_model(
+              'minilm',
+              get_sample_documents(),
+              get_sample_qa_pairs()[:3]
+          )
+          print(f'Score RAG moyen : {avg_score:.4f}')
+          assert avg_score > 0.2, f'Score RAG trop faible: {avg_score}'
+          print('Évaluation RAG validée')
+          "
+
+  deploy:
+    name: 🚀 Deploy
+    runs-on: ubuntu-latest
+    needs: [test, evaluate]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t rag-portfolio:${{ github.sha }} .
+
+      - name: Deploy notification
+        run: echo "Build OK — ${{ github.sha }}"
