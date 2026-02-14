@@ -3,7 +3,7 @@
 > Système RAG (Retrieval-Augmented Generation) spécialisé sur des papers scientifiques IA/ML.
 > **Différenciateur clé** : comparaison rigoureuse de 3 modèles d'embeddings avec métriques RAGAS.
 
-![CI](https://github.com/Rayanmlk/rag-portfolio/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/Rayanmlk/rag/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green)
 ![ChromaDB](https://img.shields.io/badge/ChromaDB-0.4-orange)
