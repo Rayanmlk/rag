@@ -7,8 +7,12 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from contextlib import asynccontextmanager
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict
 from typing import List, Optional, Dict
 import logging
@@ -50,6 +54,21 @@ app = FastAPI(
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
+# Dossier static (interface de test RAG)
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+    @app.get("/ui")
+    def serve_ui():
+        """Interface interactive pour tester le RAG."""
+        return FileResponse(STATIC_DIR / "index.html")
+
+    @app.get("/test")
+    def serve_test():
+        """Alias vers l'interface de test."""
+        return FileResponse(STATIC_DIR / "index.html")
+
 
 # ─── Schémas ─────────────────────────────────────────────────────────────────
 
@@ -89,7 +108,9 @@ def root():
         "title": "RAG Portfolio API 🤖",
         "description": "Système RAG spécialisé papers IA/ML",
         "embedding_models": list(EMBEDDING_MODELS.keys()),
-        "docs": "/docs"
+        "docs": "/docs",
+        "ui": "/ui",
+        "test_interface": "Ouvrir /ui ou /test pour l'interface de test RAG"
     }
 
 @app.get("/health")

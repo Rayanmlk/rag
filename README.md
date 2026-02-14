@@ -55,7 +55,29 @@ export MISTRAL_API_KEY=your_key  # ou OPENAI_API_KEY
 
 uvicorn app.main:app --reload
 # → http://localhost:8000/docs
+# → http://localhost:8000/ui   (interface de test RAG)
 ```
+
+## 🖥️ Interface de test RAG
+
+Une interface web interactive est disponible pour tester le RAG sans utiliser curl ou Swagger :
+
+| URL | Description |
+|-----|-------------|
+| **http://localhost:8000/ui** | Interface de test (recommandé) |
+| **http://localhost:8000/test** | Alias vers la même interface |
+
+**Fonctionnalités :**
+- Saisir une question et choisir le nombre de passages (k) à récupérer
+- Afficher la réponse, les sources, les scores de similarité et les temps (recherche / total)
+- Voir l’état du système (health) et les statistiques (chunks indexés, modèle, LLM)
+- Lancer l’évaluation des modèles d’embeddings (comparaison minilm / mpnet / scibert)
+
+**Comment tester :**
+1. Démarrer l’API : `uvicorn app.main:app --reload`
+2. Ouvrir un navigateur sur **http://localhost:8000/ui**
+3. Poser une question (ex. *What is the Transformer architecture?*)
+4. Cliquer sur **Envoyer** et consulter la réponse et les métriques
 
 ## 📡 Endpoints API
 
