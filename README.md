@@ -50,9 +50,6 @@ git clone https://github.com/TON_USERNAME/rag-portfolio
 cd rag-portfolio
 pip install -r requirements.txt
 
-# Optionnel : clé API pour LLM (sans clé = mode démo)
-export MISTRAL_API_KEY=your_key  # ou OPENAI_API_KEY
-
 uvicorn app.main:app --reload
 # → http://localhost:8000/docs
 # → http://localhost:8000/ui   (interface de test RAG)
